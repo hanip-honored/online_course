@@ -1,0 +1,458 @@
+<?php
+namespace Database\Seeders;
+
+use App\Models\Course;
+use Illuminate\Database\Seeder;
+
+class CourseSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        $courses = [
+            // Web Development
+            [
+                'title'          => 'Web Development Fundamentals',
+                'description'    => 'Learn the basics of HTML, CSS, and JavaScript to build modern websites.',
+                'instructor'     => 'John Doe',
+                'category'       => 'Web Development',
+                'duration_hours' => 20,
+                'level'          => 'beginner',
+                'price'          => 99000,
+            ],
+            [
+                'title'          => 'Advanced Laravel Framework',
+                'description'    => 'Master Laravel framework with advanced topics like queues, events, and testing.',
+                'instructor'     => 'Jane Smith',
+                'category'       => 'Web Development',
+                'duration_hours' => 35,
+                'level'          => 'advanced',
+                'price'          => 299000,
+            ],
+            [
+                'title'          => 'React JS Complete Guide',
+                'description'    => 'Build modern web applications with React, Redux, and React Router.',
+                'instructor'     => 'Mike Johnson',
+                'category'       => 'Web Development',
+                'duration_hours' => 25,
+                'level'          => 'intermediate',
+                'price'          => 199000,
+            ],
+            [
+                'title'          => 'Vue.js Masterclass',
+                'description'    => 'Master Vue.js 3 with Composition API, Vuex, and Vue Router for modern web apps.',
+                'instructor'     => 'Sophie Martin',
+                'category'       => 'Web Development',
+                'duration_hours' => 28,
+                'level'          => 'intermediate',
+                'price'          => 219000,
+            ],
+            [
+                'title'          => 'Node.js Backend Development',
+                'description'    => 'Build scalable backend applications with Node.js, Express, and MongoDB.',
+                'instructor'     => 'James Wilson',
+                'category'       => 'Web Development',
+                'duration_hours' => 32,
+                'level'          => 'intermediate',
+                'price'          => 279000,
+            ],
+            [
+                'title'          => 'Full Stack JavaScript Developer',
+                'description'    => 'Complete MERN stack development from frontend to backend deployment.',
+                'instructor'     => 'Ryan Cooper',
+                'category'       => 'Web Development',
+                'duration_hours' => 50,
+                'level'          => 'advanced',
+                'price'          => 449000,
+            ],
+
+            // Data Science & AI
+            [
+                'title'          => 'Python for Data Science',
+                'description'    => 'Learn Python programming for data analysis and machine learning.',
+                'instructor'     => 'Dr. Ahmad',
+                'category'       => 'Data Science',
+                'duration_hours' => 40,
+                'level'          => 'intermediate',
+                'price'          => 249000,
+            ],
+            [
+                'title'          => 'Machine Learning Basics',
+                'description'    => 'Introduction to machine learning algorithms and their applications.',
+                'instructor'     => 'Dr. Sarah',
+                'category'       => 'Data Science',
+                'duration_hours' => 30,
+                'level'          => 'intermediate',
+                'price'          => 349000,
+            ],
+            [
+                'title'          => 'Deep Learning with TensorFlow',
+                'description'    => 'Build neural networks and deep learning models using TensorFlow and Keras.',
+                'instructor'     => 'Prof. Michael Zhang',
+                'category'       => 'Data Science',
+                'duration_hours' => 45,
+                'level'          => 'advanced',
+                'price'          => 399000,
+            ],
+            [
+                'title'          => 'Data Analysis with Pandas',
+                'description'    => 'Master data manipulation and analysis using Python Pandas library.',
+                'instructor'     => 'Dr. Rachel Green',
+                'category'       => 'Data Science',
+                'duration_hours' => 25,
+                'level'          => 'beginner',
+                'price'          => 189000,
+            ],
+            [
+                'title'          => 'Computer Vision Fundamentals',
+                'description'    => 'Learn image processing and computer vision techniques with OpenCV.',
+                'instructor'     => 'Dr. Kevin Park',
+                'category'       => 'Data Science',
+                'duration_hours' => 35,
+                'level'          => 'advanced',
+                'price'          => 379000,
+            ],
+            [
+                'title'          => 'Natural Language Processing',
+                'description'    => 'Process and analyze text data using NLP techniques and transformers.',
+                'instructor'     => 'Dr. Anna Liu',
+                'category'       => 'Data Science',
+                'duration_hours' => 38,
+                'level'          => 'advanced',
+                'price'          => 389000,
+            ],
+
+            // Mobile Development
+            [
+                'title'          => 'Mobile App Development with Flutter',
+                'description'    => 'Create beautiful cross-platform mobile apps using Flutter and Dart.',
+                'instructor'     => 'Lisa Chen',
+                'category'       => 'Mobile Development',
+                'duration_hours' => 45,
+                'level'          => 'intermediate',
+                'price'          => 399000,
+            ],
+            [
+                'title'          => 'iOS App Development with Swift',
+                'description'    => 'Build native iOS applications using Swift and SwiftUI.',
+                'instructor'     => 'Tom Anderson',
+                'category'       => 'Mobile Development',
+                'duration_hours' => 42,
+                'level'          => 'intermediate',
+                'price'          => 379000,
+            ],
+            [
+                'title'          => 'Android Development with Kotlin',
+                'description'    => 'Create modern Android apps using Kotlin and Jetpack Compose.',
+                'instructor'     => 'Maria Santos',
+                'category'       => 'Mobile Development',
+                'duration_hours' => 40,
+                'level'          => 'intermediate',
+                'price'          => 369000,
+            ],
+            [
+                'title'          => 'React Native Mobile Development',
+                'description'    => 'Build cross-platform mobile apps with React Native and JavaScript.',
+                'instructor'     => 'Chris Taylor',
+                'category'       => 'Mobile Development',
+                'duration_hours' => 36,
+                'level'          => 'intermediate',
+                'price'          => 329000,
+            ],
+
+            // Database & Cloud
+            [
+                'title'          => 'Database Design and SQL',
+                'description'    => 'Learn database design principles and master SQL queries.',
+                'instructor'     => 'Robert Brown',
+                'category'       => 'Database',
+                'duration_hours' => 15,
+                'level'          => 'beginner',
+                'price'          => 149000,
+            ],
+            [
+                'title'          => 'MongoDB for Modern Applications',
+                'description'    => 'Master NoSQL database design and operations with MongoDB.',
+                'instructor'     => 'Daniel Kim',
+                'category'       => 'Database',
+                'duration_hours' => 22,
+                'level'          => 'intermediate',
+                'price'          => 199000,
+            ],
+            [
+                'title'          => 'AWS Cloud Practitioner',
+                'description'    => 'Learn Amazon Web Services fundamentals and cloud computing concepts.',
+                'instructor'     => 'Mark Stevens',
+                'category'       => 'Cloud Computing',
+                'duration_hours' => 30,
+                'level'          => 'beginner',
+                'price'          => 279000,
+            ],
+            [
+                'title'          => 'Docker and Kubernetes',
+                'description'    => 'Master containerization and orchestration with Docker and Kubernetes.',
+                'instructor'     => 'Nina Rodriguez',
+                'category'       => 'DevOps',
+                'duration_hours' => 35,
+                'level'          => 'advanced',
+                'price'          => 349000,
+            ],
+
+            // Design & Marketing
+            [
+                'title'          => 'Digital Marketing Essentials',
+                'description'    => 'Master SEO, social media marketing, and content marketing strategies.',
+                'instructor'     => 'Emma Wilson',
+                'category'       => 'Marketing',
+                'duration_hours' => 20,
+                'level'          => 'beginner',
+                'price'          => 179000,
+            ],
+            [
+                'title'          => 'UI/UX Design Principles',
+                'description'    => 'Learn user interface and user experience design best practices.',
+                'instructor'     => 'David Lee',
+                'category'       => 'Design',
+                'duration_hours' => 25,
+                'level'          => 'beginner',
+                'price'          => 229000,
+            ],
+            [
+                'title'          => 'Graphic Design with Adobe Suite',
+                'description'    => 'Master Photoshop, Illustrator, and InDesign for professional design work.',
+                'instructor'     => 'Isabella Garcia',
+                'category'       => 'Design',
+                'duration_hours' => 32,
+                'level'          => 'intermediate',
+                'price'          => 259000,
+            ],
+            [
+                'title'          => 'Social Media Marketing Mastery',
+                'description'    => 'Create effective social media campaigns across all major platforms.',
+                'instructor'     => 'Hannah White',
+                'category'       => 'Marketing',
+                'duration_hours' => 24,
+                'level'          => 'intermediate',
+                'price'          => 219000,
+            ],
+            [
+                'title'          => 'Content Marketing Strategy',
+                'description'    => 'Develop and execute content marketing strategies that drive results.',
+                'instructor'     => 'Brian Miller',
+                'category'       => 'Marketing',
+                'duration_hours' => 18,
+                'level'          => 'intermediate',
+                'price'          => 199000,
+            ],
+
+            // Security & Blockchain
+            [
+                'title'          => 'Cybersecurity Fundamentals',
+                'description'    => 'Introduction to network security, encryption, and ethical hacking.',
+                'instructor'     => 'Alex Turner',
+                'category'       => 'Security',
+                'duration_hours' => 30,
+                'level'          => 'intermediate',
+                'price'          => 299000,
+            ],
+            [
+                'title'          => 'Ethical Hacking & Penetration Testing',
+                'description'    => 'Learn ethical hacking techniques and penetration testing methodologies.',
+                'instructor'     => 'Jack Morrison',
+                'category'       => 'Security',
+                'duration_hours' => 40,
+                'level'          => 'advanced',
+                'price'          => 429000,
+            ],
+            [
+                'title'          => 'Blockchain Development',
+                'description'    => 'Build decentralized applications and smart contracts with Ethereum.',
+                'instructor'     => 'Victor Chen',
+                'category'       => 'Blockchain',
+                'duration_hours' => 38,
+                'level'          => 'advanced',
+                'price'          => 399000,
+            ],
+
+            // Game Development
+            [
+                'title'          => 'Unity Game Development',
+                'description'    => 'Create 2D and 3D games using Unity engine and C# programming.',
+                'instructor'     => 'Oliver Thompson',
+                'category'       => 'Game Development',
+                'duration_hours' => 45,
+                'level'          => 'intermediate',
+                'price'          => 379000,
+            ],
+            [
+                'title'          => 'Unreal Engine 5 for Beginners',
+                'description'    => 'Learn game development with Unreal Engine 5 and Blueprint visual scripting.',
+                'instructor'     => 'Sophia Martinez',
+                'category'       => 'Game Development',
+                'duration_hours' => 42,
+                'level'          => 'beginner',
+                'price'          => 359000,
+            ],
+
+            // COURSE BARU - Digital Marketing
+            [
+                'title'          => 'Digital Marketing Mastery',
+                'description'    => 'Master SEO, SEM, social media marketing, and content marketing strategies.',
+                'instructor'     => 'Amanda White',
+                'category'       => 'Digital Marketing',
+                'duration_hours' => 32,
+                'level'          => 'intermediate',
+                'price'          => 249000,
+            ],
+            [
+                'title'          => 'Social Media Marketing Expert',
+                'description'    => 'Learn to create effective social media campaigns across all major platforms.',
+                'instructor'     => 'Ryan Parker',
+                'category'       => 'Digital Marketing',
+                'duration_hours' => 24,
+                'level'          => 'beginner',
+                'price'          => 189000,
+            ],
+            [
+                'title'          => 'Email Marketing & Automation',
+                'description'    => 'Build automated email campaigns that convert leads into customers.',
+                'instructor'     => 'Lisa Anderson',
+                'category'       => 'Digital Marketing',
+                'duration_hours' => 18,
+                'level'          => 'intermediate',
+                'price'          => 169000,
+            ],
+
+            // COURSE BARU - UI/UX Design
+            [
+                'title'          => 'UI/UX Design Fundamentals',
+                'description'    => 'Learn user interface and user experience design principles and best practices.',
+                'instructor'     => 'Emma Wilson',
+                'category'       => 'Design',
+                'duration_hours' => 28,
+                'level'          => 'beginner',
+                'price'          => 229000,
+            ],
+            [
+                'title'          => 'Figma for Product Designers',
+                'description'    => 'Master Figma for creating professional UI designs and prototypes.',
+                'instructor'     => 'David Brown',
+                'category'       => 'Design',
+                'duration_hours' => 22,
+                'level'          => 'intermediate',
+                'price'          => 199000,
+            ],
+            [
+                'title'          => 'Adobe XD Complete Course',
+                'description'    => 'Design and prototype websites and mobile apps with Adobe XD.',
+                'instructor'     => 'Nina Garcia',
+                'category'       => 'Design',
+                'duration_hours' => 20,
+                'level'          => 'beginner',
+                'price'          => 179000,
+            ],
+
+            // COURSE BARU - Business & Productivity
+            [
+                'title'          => 'Project Management with Agile & Scrum',
+                'description'    => 'Master agile methodologies and become a certified scrum master.',
+                'instructor'     => 'Robert Taylor',
+                'category'       => 'Business',
+                'duration_hours' => 26,
+                'level'          => 'intermediate',
+                'price'          => 289000,
+            ],
+            [
+                'title'          => 'Excel for Data Analysis',
+                'description'    => 'Advanced Excel techniques for data analysis, pivot tables, and macros.',
+                'instructor'     => 'Patricia Moore',
+                'category'       => 'Business',
+                'duration_hours' => 20,
+                'level'          => 'intermediate',
+                'price'          => 159000,
+            ],
+            [
+                'title'          => 'Business Communication Skills',
+                'description'    => 'Improve your professional communication, presentation, and negotiation skills.',
+                'instructor'     => 'James Wilson',
+                'category'       => 'Business',
+                'duration_hours' => 15,
+                'level'          => 'beginner',
+                'price'          => 139000,
+            ],
+
+            // COURSE BARU - Mobile Development
+            [
+                'title'          => 'Flutter App Development',
+                'description'    => 'Build beautiful cross-platform mobile apps with Flutter and Dart.',
+                'instructor'     => 'Kevin Lee',
+                'category'       => 'Mobile Development',
+                'duration_hours' => 35,
+                'level'          => 'intermediate',
+                'price'          => 269000,
+            ],
+            [
+                'title'          => 'React Native Masterclass',
+                'description'    => 'Create native mobile apps for iOS and Android using React Native.',
+                'instructor'     => 'Sarah Johnson',
+                'category'       => 'Mobile Development',
+                'duration_hours' => 32,
+                'level'          => 'intermediate',
+                'price'          => 259000,
+            ],
+            [
+                'title'          => 'iOS Development with Swift',
+                'description'    => 'Learn to build iOS apps from scratch using Swift and SwiftUI.',
+                'instructor'     => 'Michael Chen',
+                'category'       => 'Mobile Development',
+                'duration_hours' => 40,
+                'level'          => 'beginner',
+                'price'          => 299000,
+            ],
+            [
+                'title'          => 'Android Jetpack Compose',
+                'description'    => 'Modern Android development with Jetpack Compose and Kotlin.',
+                'instructor'     => 'Tom Anderson',
+                'category'       => 'Mobile Development',
+                'duration_hours' => 38,
+                'level'          => 'intermediate',
+                'price'          => 289000,
+            ],
+
+            // COURSE BARU - DevOps & Cloud
+            [
+                'title'          => 'Docker & Kubernetes Essentials',
+                'description'    => 'Master containerization and orchestration with Docker and Kubernetes.',
+                'instructor'     => 'Chris Roberts',
+                'category'       => 'DevOps',
+                'duration_hours' => 30,
+                'level'          => 'intermediate',
+                'price'          => 319000,
+            ],
+            [
+                'title'          => 'AWS Cloud Practitioner',
+                'description'    => 'Get started with Amazon Web Services and prepare for certification.',
+                'instructor'     => 'Rachel Green',
+                'category'       => 'Cloud Computing',
+                'duration_hours' => 28,
+                'level'          => 'beginner',
+                'price'          => 279000,
+            ],
+            [
+                'title'          => 'CI/CD with Jenkins & GitLab',
+                'description'    => 'Automate your software delivery pipeline with CI/CD best practices.',
+                'instructor'     => 'Mark Stevens',
+                'category'       => 'DevOps',
+                'duration_hours' => 24,
+                'level'          => 'advanced',
+                'price'          => 299000,
+            ],
+        ];
+
+        foreach ($courses as $course) {
+            Course::create($course);
+        }
+    }
+}
