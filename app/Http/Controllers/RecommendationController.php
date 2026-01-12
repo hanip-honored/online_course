@@ -25,6 +25,29 @@ class RecommendationController extends Controller
                 $user = Auth::user();
                 $topN = $request->input('top_n', 5);
 
+                // Check if user has any ratings
+                $userRatingsCount = \App\Models\Rating::where('user_id', $user->id)->count();
+
+                if ($userRatingsCount === 0) {
+                    // User has no ratings, return popular courses
+                    $popularCourses = Course::getPopularCourses($topN, 2);
+
+                    return response()->json([
+                        'success'         => true,
+                        'type'            => 'popular',
+                        'recommendations' => $popularCourses->map(function ($course) {
+                            return [
+                                'course_id'        => $course->id,
+                                'predicted_rating' => $course->predicted_rating,
+                                'course_name'      => $course->title,
+                                'title'            => $course->title,
+                                'category'         => $course->category,
+                                'description'      => $course->description,
+                            ];
+                        }),
+                    ]);
+                }
+
                 $result = $this->recommenderService->getRecommendations(
                     userId: $user->id,
                     topN: $topN,
@@ -33,12 +56,23 @@ class RecommendationController extends Controller
 
                 if (! $result['success']) {
                     \Log::error('Recommendations failed', $result);
+
+                    $popularCourses = Course::getPopularCourses($topN, 2);
+
                     return response()->json([
-                        'success' => false,
-                        'error'   => 'Failed to get recommendations',
-                        'message' => $result['error'] ?? 'Unknown error',
-                        'details' => $result['details'] ?? null,
-                    ], 200);
+                        'success'         => true,
+                        'type'            => 'popular',
+                        'recommendations' => $popularCourses->map(function ($course) {
+                            return [
+                                'course_id'        => $course->id,
+                                'predicted_rating' => $course->predicted_rating,
+                                'course_name'      => $course->title,
+                                'title'            => $course->title,
+                                'category'         => $course->category,
+                                'description'      => $course->description,
+                            ];
+                        }),
+                    ]);
                 }
 
                 return response()->json($result['data']);
@@ -48,16 +82,84 @@ class RecommendationController extends Controller
                     'trace' => $e->getTraceAsString(),
                 ]);
 
-                return response()->json([
-                    'success' => false,
-                    'error'   => 'System error',
-                    'message' => $e->getMessage(),
-                ], 200);
+                // Fallback to popular courses on exception
+                try {
+                    $popularCourses = Course::getPopularCourses($request->input('top_n', 5), 2);
+
+                    return response()->json([
+                        'success'         => true,
+                        'type'            => 'popular',
+                        'recommendations' => $popularCourses->map(function ($course) {
+                            return [
+                                'course_id'        => $course->id,
+                                'predicted_rating' => $course->predicted_rating,
+                                'course_name'      => $course->title,
+                                'title'            => $course->title,
+                                'category'         => $course->category,
+                                'description'      => $course->description,
+                            ];
+                        }),
+                    ]);
+                } catch (\Exception $fallbackException) {
+                    return response()->json([
+                        'success' => false,
+                        'error'   => 'System error',
+                        'message' => $e->getMessage(),
+                    ], 200);
+                }
             }
         }
 
-        // Otherwise, show the view
-        return view('recommendations');
+        // For view requests, get user's rating count
+        $user             = Auth::user();
+        $userRatingsCount = \App\Models\Rating::where('user_id', $user->id)->count();
+
+        if ($userRatingsCount === 0) {
+            // User has no ratings, show popular courses
+            $popularCourses = Course::getPopularCourses(10, 2);
+
+            return view('recommendations', [
+                'recommendationType' => 'popular',
+                'message'            => 'Mulai beri rating pada course untuk mendapatkan rekomendasi yang dipersonalisasi!',
+                'courses'            => $popularCourses,
+            ]);
+        }
+
+        // User has ratings, get personalized recommendations
+        $result = $this->recommenderService->getRecommendations($user->id, 10, true);
+
+        if ($result['success']) {
+            $recommendations = $result['data']['recommendations'] ?? [];
+
+            // Get full course details
+            $courseIds = array_column($recommendations, 'course_id');
+            $courses   = Course::whereIn('id', $courseIds)->get()->keyBy('id');
+
+            // Merge predictions with course data
+            $recommendedCourses = collect($recommendations)->map(function ($rec) use ($courses) {
+                if (isset($courses[$rec['course_id']])) {
+                    $course                   = $courses[$rec['course_id']];
+                    $course->predicted_rating = $rec['predicted_rating'];
+                    return $course;
+                }
+                return null;
+            })->filter();
+
+            return view('recommendations', [
+                'recommendationType' => 'personalized',
+                'message'            => null,
+                'courses'            => $recommendedCourses,
+            ]);
+        }
+
+        // If recommendation failed, fallback to popular courses
+        $popularCourses = Course::getPopularCourses(10, 2);
+
+        return view('recommendations', [
+            'recommendationType' => 'popular',
+            'message'            => 'Tidak dapat memuat rekomendasi personal. Menampilkan course populer.',
+            'courses'            => $popularCourses,
+        ]);
     }
 
     /**

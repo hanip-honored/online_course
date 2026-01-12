@@ -42,7 +42,11 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-lg font-semibold">Recommended Courses for You</h3>
+                        <div>
+                            <h3 class="text-lg font-semibold" id="recommendations-title">Recommended Courses for You
+                            </h3>
+                            <p class="text-sm text-gray-500 mt-1" id="recommendations-subtitle"></p>
+                        </div>
                         <button onclick="refreshRecommendations()"
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                             Refresh
@@ -188,13 +192,14 @@
             }
         }
 
-        // Check service health
         // Load recommendations
         async function loadRecommendations() {
             const loadingDiv = document.getElementById('recommendations-loading');
             const errorDiv = document.getElementById('recommendations-error');
             const listDiv = document.getElementById('recommendations-list');
             const noRecsDiv = document.getElementById('no-recommendations');
+            const titleEl = document.getElementById('recommendations-title');
+            const subtitleEl = document.getElementById('recommendations-subtitle');
 
             loadingDiv.classList.remove('hidden');
             errorDiv.classList.add('hidden');
@@ -208,16 +213,26 @@
                 loadingDiv.classList.add('hidden');
 
                 if (data.success && data.recommendations && data.recommendations.length > 0) {
+                    // Update title based on recommendation type
+                    if (data.type === 'popular') {
+                        titleEl.innerHTML = '🔥 Popular Courses';
+                        subtitleEl.innerHTML = '<span class="text-orange-600">⚠️ ' + (data.message ||
+                            'Showing popular courses') + '</span>';
+                    } else {
+                        titleEl.innerHTML = '✨ Personalized Recommendations';
+                        subtitleEl.innerHTML = '<span class="text-green-600">✓ Based on your ratings</span>';
+                    }
+
                     listDiv.classList.remove('hidden');
                     listDiv.innerHTML = data.recommendations.map(rec => `
                         <div class="border border-gray-200 rounded-lg p-5 hover:shadow-xl transition bg-white">
                             <h4 class="font-bold text-xl mb-2 text-gray-800">${rec.course_name}</h4>
                             <div class="flex items-center mb-3">
-                                <span class="text-yellow-500 font-semibold text-lg mr-2">★ ${rec.predicted_rating.toFixed(1)}</span>
-                                <span class="text-gray-500 text-sm">Predicted for you</span>
+                                <span class="text-yellow-500 font-semibold text-lg mr-2">★ ${parseFloat(rec.predicted_rating).toFixed(1)}</span>
+                                <span class="text-gray-500 text-sm">${data.type === 'popular' ? 'Average rating' : 'Predicted for you'}</span>
                             </div>
                             ${rec.category ? `<span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mb-3">${rec.category}</span>` : ''}
-                            <p class="text-gray-600 text-sm mb-3 leading-relaxed">${rec.description ? rec.description.substring(0, 120) + '...' : 'Discover this course recommended just for you!'}</p>
+                            <p class="text-gray-600 text-sm mb-3 leading-relaxed">${rec.description ? rec.description.substring(0, 120) + '...' : 'Discover this course!'}</p>
                             ${rec.instructor ? `<p class="text-gray-500 text-xs mb-4"><span class="font-semibold">Instructor:</span> ${rec.instructor}</p>` : ''}
                             <a href="/courses/${rec.course_id}"
                                class="inline-block bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold py-2.5 px-5 rounded-lg shadow-md hover:shadow-lg transition transform hover:-translate-y-0.5 text-sm">
@@ -269,9 +284,9 @@
                         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
                             <p class="font-semibold">✓ Model trained successfully!</p>
                             ${data.metrics ? `
-                                                <p class="text-sm mt-1">RMSE: ${data.metrics.rmse.toFixed(4)}, MAE: ${data.metrics.mae.toFixed(4)}</p>
-                                                <p class="text-sm">Training data: ${data.data_size} ratings</p>
-                                            ` : ''}
+                                                        <p class="text-sm mt-1">RMSE: ${data.metrics.rmse.toFixed(4)}, MAE: ${data.metrics.mae.toFixed(4)}</p>
+                                                        <p class="text-sm">Training data: ${data.data_size} ratings</p>
+                                                    ` : ''}
                         </div>
                     `;
                     // Refresh metrics and recommendations after training
